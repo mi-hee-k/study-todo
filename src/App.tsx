@@ -3,6 +3,7 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import AddTodo from './components/AddTodo';
 import TodoList from './components/TodoList';
+import Swal from 'sweetalert2';
 
 export type Todo = {
   id: string;
@@ -26,19 +27,46 @@ function App() {
   // 추가
   const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newTodo = {
-      id: uuidv4(),
-      title: titleInput,
-      done: false,
-    };
-    setTodos([...todos, newTodo]);
-    setTitleInput('');
+    if (titleInput.trim().length === 0) {
+      Swal.fire('내용을 입력해주세요');
+      return;
+    }
+    Swal.fire({
+      title: '등록하시겠습니까?',
+      showDenyButton: true,
+      confirmButtonText: '등록',
+      denyButtonText: '취소',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newTodo = {
+          id: uuidv4(),
+          title: titleInput,
+          done: false,
+        };
+        setTodos([...todos, newTodo]);
+        setTitleInput('');
+      } else if (result.isDenied) {
+        setTitleInput('');
+        return;
+      }
+    });
   };
 
   // 삭제
   const deleteTodo = (id: string) => {
-    const updatedTodos = todos.filter((item) => item.id !== id);
-    setTodos(updatedTodos);
+    Swal.fire({
+      title: '정말 삭제하시겠습니까?',
+      showDenyButton: true,
+      confirmButtonText: '삭제',
+      denyButtonText: '취소',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedTodos = todos.filter((item) => item.id !== id);
+        setTodos(updatedTodos);
+      } else if (result.isDenied) {
+        return;
+      }
+    });
   };
 
   // 수정
@@ -67,6 +95,7 @@ function App() {
         deleteTodo={deleteTodo}
         isDone={false}
       />
+
       <TodoList
         todos={todos}
         changeTodo={changeTodo}

@@ -12,6 +12,7 @@ const TodoList = ({ todos, changeTodo, deleteTodo, isDone }: TodoListType) => {
   const filteredTodo = isDone
     ? todos.filter((item) => item.done === true)
     : todos.filter((item) => item.done === false);
+
   return (
     <div className='w-full mb-8'>
       <h2 className='mb-4 text-xl font-bold text-slate-700'>

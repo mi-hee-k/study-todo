@@ -39,6 +39,20 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  // 수정
+  const changeTodo = (id: string) => {
+    const changeTodos = todos.map((item) => {
+      if (item.id === id) {
+        item.done = !item.done;
+      }
+      return item;
+    });
+    setTodos(changeTodos);
+  };
+
+  const filteredTodos = todos.filter((item) => item.done === false);
+  const completeTodos = todos.filter((item) => item.done === true);
+
   return (
     <div className='w-[70%] m-auto flex flex-col justify-center items-center'>
       <h1 className='mt-4 mb-4 text-3xl font-bold'>TodoList</h1>
@@ -59,10 +73,15 @@ function App() {
       <div className='w-full mb-8'>
         <h2 className='mb-4 text-xl font-bold text-slate-700'>진행중...😊</h2>
         <ul className='flex flex-wrap w-full'>
-          {todos.map((item) => (
+          {filteredTodos.map((item) => (
             <li className='w-[20%]' key={item.id}>
               <h3 className='font-bold'>{item.title}</h3>
-              <button className='mr-2 font-bold text-green-800'>완료</button>
+              <button
+                className='mr-2 font-bold text-green-800'
+                onClick={() => changeTodo(item.id)}
+              >
+                완료
+              </button>
               <button
                 className='font-bold text-red-800'
                 onClick={() => deleteAdd(item.id)}
@@ -77,12 +96,22 @@ function App() {
       <div className='w-full mb-8'>
         <h2 className='mb-4 text-xl font-bold text-slate-700'>완료👌</h2>
         <ul className='flex flex-wrap w-full'>
-          {todos.map((item) => (
+          {completeTodos.map((item) => (
             <li className='w-[20%]' key={item.id}>
               <h3 className='font-bold'>{item.title}</h3>
               <p>{item.title}</p>
-              <button className='mr-2 font-bold text-green-800'>완료</button>
-              <button className='font-bold text-red-800'>삭제</button>
+              <button
+                className='mr-2 font-bold text-green-800'
+                onClick={() => changeTodo(item.id)}
+              >
+                완료
+              </button>
+              <button
+                className='font-bold text-red-800'
+                onClick={() => deleteAdd(item.id)}
+              >
+                삭제
+              </button>
             </li>
           ))}
         </ul>

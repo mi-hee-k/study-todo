@@ -9,9 +9,7 @@ type TodoListType = {
 };
 
 const TodoList = ({ todos, changeTodo, deleteTodo, isDone }: TodoListType) => {
-  const filteredTodo = isDone
-    ? todos.filter((item) => item.done === true)
-    : todos.filter((item) => item.done === false);
+  const filteredTodo = todos.filter((item) => item.done === isDone);
 
   return (
     <div className='w-full mb-8'>

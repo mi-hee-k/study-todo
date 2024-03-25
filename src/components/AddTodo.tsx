@@ -17,6 +17,7 @@ const AddTodo = ({ addTodo, titleInput, changeInput }: AddTodoType) => {
         placeholder='할 일'
         className='px-4 py-1 mr-4 rounded-md bg-slate-200'
       />
+
       <button className='px-4 py-1 bg-yellow-500 rounded-md'>등록</button>
     </form>
   );

@@ -27,7 +27,10 @@ function App() {
   // 추가
   const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if (titleInput.trim().length === 0) {
+      Swal.fire('내용을 입력해주세요');
+      return;
+    }
     Swal.fire({
       title: '등록하시겠습니까?',
       showDenyButton: true,
